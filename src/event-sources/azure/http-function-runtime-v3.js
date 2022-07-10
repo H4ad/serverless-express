@@ -71,10 +71,10 @@ function getResponseToHttpFunction ({ statusCode, body, headers = {}, isBase64En
         cookie.sameSite = parsedCookie.samesite
       }
 
-      if (parsedCookie.expires && typeof parsedCookie.expires === 'string') {
-        cookie.expires = new Date(parsedCookie.expires)
-      } else if (parsedCookie.expires && typeof value === 'number') {
-        cookie.expires = parsedCookie.expires
+      if (parsedCookie.expires) {
+        cookie.expires = isNaN(Number(parsedCookie.expires))
+          ? new Date(parsedCookie.expires)
+          : Number(parsedCookie.expires);
       }
 
       if (parsedCookie.path) {
